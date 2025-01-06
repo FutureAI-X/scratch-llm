@@ -18,7 +18,7 @@ class FutureAiConfig(PretrainedConfig):
         head_size: int = 64,
         num_blocks: int = 8,
         dropout: float = 0.0,
-        context_length: int = 16,
+        context_length: int = 128,
         vocab_size: int = 151644,
         **kwargs
     ):

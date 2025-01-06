@@ -9,7 +9,7 @@ from model_define.modeling_futureai import FutureAiModel
 from tqdm import tqdm
 
 learning_rate = 1e-3
-epochs = 1
+epochs = 50
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -17,10 +17,15 @@ tokenizer = AutoTokenizer.from_pretrained("../tokenizer_file/tokenizer_qwen")
 
 # 定义Model
 config = FutureAiConfig()
+config.context_length = 32
+config.d_model = 64
+config.num_heads = 8
+config.head_size = 8
+config.num_blocks = 4
 model = FutureAiModel(config)
 model = model.to(device)
 
-dataset = load_dataset('json', data_files="../dataset_file/dataset_province/province_city.jsonl", split='train')
+dataset = load_dataset('json', data_files="../dataset_file/dataset_province/province_intro.jsonl", split='train')
 
 def tokenize_function(batch):
     """对原始文本进行token化，生成新的参数：
@@ -72,6 +77,7 @@ for epoch in range(epochs):
         print(i)
 
         if i % 100 == 0:
-            torch.save(model.state_dict(), '../checkpoint_folder/checkpoint_province/model-province-scratch.pt')
+            torch.save(model.state_dict(), '../checkpoint_folder/checkpoint_province/model-province-intro.pt')
+    torch.save(model.state_dict(), '../checkpoint_folder/checkpoint_province/model-province-intro.pt')
 
-torch.save(model.state_dict(), '../checkpoint_folder/checkpoint_province/model-province-scratch.pt')
+torch.save(model.state_dict(), '../checkpoint_folder/checkpoint_province/model-province-intro.pt')
