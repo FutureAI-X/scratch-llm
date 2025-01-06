@@ -2,7 +2,7 @@ import torch
 from datasets import load_dataset
 from transformers import AutoTokenizer, TrainingArguments, DataCollatorWithPadding, Trainer
 
-from model_define.configuration_futureai import FutureAiConfig
+from model_define.model_futureai.configuration_futureai import FutureAiConfig
 from model_define.modeling_futureai import FutureAiModel
 
 # 定义运行设备

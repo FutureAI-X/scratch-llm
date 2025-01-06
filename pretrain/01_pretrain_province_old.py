@@ -3,7 +3,7 @@
 import torch
 from transformers import AutoTokenizer
 
-from model_define.configuration_futureai import FutureAiConfig
+from model_define.model_futureai.configuration_futureai import FutureAiConfig
 from model_define.modeling_futureai import FutureAiModel
 
 # 参数定义
