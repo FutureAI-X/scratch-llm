@@ -1,15 +1,13 @@
 """最原始训练循环，简单模式"""
 
-import requests
 import torch
-import os
-import tiktoken
+from transformers import AutoTokenizer
 
 from model_define.configuration_futureai import FutureAiConfig
 from model_define.modeling_futureai import FutureAiModel
 
 # 参数定义
-batch_size = 4  # How many batches per training step
+batch_size = 2  # How many batches per training step
 context_length = 16  # Length of the token chunk each batch
 learning_rate = 1e-3  # 0.001
 dropout = 0.1  # Dropout rate
@@ -20,14 +18,12 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'  # Use GPU if it's avail
 TORCH_SEED = 1337
 torch.manual_seed(TORCH_SEED)
 
-with open('./dataset_file/dataset_sales/sales_textbook_zhejiang.txt', 'r', encoding='utf-8') as f:
+with open('../dataset_file/dataset_province/province_city.txt', 'r', encoding='utf-8') as f:
     text = f.read()
 
-# 使用 tiktoken 对文本进行编码
-encoding = tiktoken.get_encoding("cl100k_base")
-tokenized_text = encoding.encode(text)
-max_token_value = max(tokenized_text) + 1  # the maximum value of the tokenized numbers
-print(max_token_value)
+# 使用 Qwen Tokenzier 对文本进行编码
+tokenizer = AutoTokenizer.from_pretrained("../tokenizer_file/tokenizer_qwen")
+tokenized_text = tokenizer.encode(text)
 tokenized_text = torch.tensor(tokenized_text, dtype=torch.long, device=device)  # put tokenized text into tensor
 
 # 拆分训练数据与评估数据
@@ -35,14 +31,11 @@ split_idx = int(len(tokenized_text) * 0.9)
 train_data = tokenized_text[:split_idx]
 val_data = tokenized_text[split_idx:]
 
-
 # 模型初始化
 config = FutureAiConfig()
-config.vocab_size = max_token_value
 config.dropout = dropout
 model = FutureAiModel(config)
 model = model.to(device)
-
 
 # 获取训练数据
 def get_batch(split: str):
@@ -84,6 +77,7 @@ for step in range(max_iters):
               round(losses['valid'].item(), 3))
 
     xb, yb = get_batch('train')
+    print(xb)
     inference_res = model(xb, yb)
     logits = inference_res.logits
     loss = inference_res.loss
@@ -92,14 +86,15 @@ for step in range(max_iters):
     optimizer.step()
 
 # 模型保存
-torch.save(model.state_dict(), './checkpoint_folder/checkpoint_sales/model-ckpt.pt')
+torch.save(model.state_dict(), '../checkpoint_folder/checkpoint_province/model-province.pt')
 
 # Generate
 model.eval()
-start = '浙江的'
-start_ids = encoding.encode(start)
-x = (torch.tensor(start_ids, dtype=torch.long, device=device)[None, ...])
-y = model.generate(x, max_new_tokens=100)
-print('---------------')
-print(encoding.decode(y[0].tolist()))
-print('---------------')
+for i in range(10):
+    start = '江苏'
+    start_ids = tokenizer.encode(start)
+    x = (torch.tensor(start_ids, dtype=torch.long, device=device)[None, ...])
+    y = model.generate(x, max_new_tokens=5)
+    print('---------------')
+    print(tokenizer.decode(y[0].tolist()))
+    print('---------------')

@@ -1,7 +1,7 @@
 import torch
 from datasets import load_dataset
 from torch.utils.data import DataLoader
-from transformers import AutoTokenizer, TrainingArguments, Trainer
+from transformers import AutoTokenizer
 
 from model_define.configuration_futureai import FutureAiConfig
 from model_define.modeling_futureai import FutureAiModel

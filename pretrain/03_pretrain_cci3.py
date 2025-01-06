@@ -42,7 +42,7 @@ dataset = dataset.map(prepare_dataset, batched=True)
 
 # 定义训练参数
 training_args = TrainingArguments(
-    output_dir="./checkpoint_folder", # 模型输出目录，训练结果（如检查点、最终模型等）将保存在这个文件夹中。
+    output_dir="../checkpoint_folder", # 模型输出目录，训练结果（如检查点、最终模型等）将保存在这个文件夹中。
     overwrite_output_dir=True, # 如果设置为 True，则允许覆盖输出目录中的现有内容。
     num_train_epochs=5, # 训练的总轮数（epoch），即整个数据集会被遍历 3 次。
     per_device_train_batch_size=1, # 每个设备（GPU/CPU）上的训练批次大小。如果使用多个 GPU，总批次大小将是这个值乘以 GPU 数量。
