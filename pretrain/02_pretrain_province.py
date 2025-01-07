@@ -4,9 +4,7 @@ from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
 
 from model_define.model_futureai.configuration_futureai import FutureAiConfig
-from model_define.modeling_futureai import FutureAiModel
-
-from tqdm import tqdm
+from model_define.model_futureai.modeling_futureai import FutureAiModel
 
 learning_rate = 1e-3
 epochs = 50

@@ -4,7 +4,7 @@ import torch
 from transformers import AutoTokenizer
 
 from model_define.model_futureai.configuration_futureai import FutureAiConfig
-from model_define.modeling_futureai import FutureAiModel
+from model_define.model_futureai.modeling_futureai import FutureAiModel
 
 # 参数定义
 batch_size = 2  # How many batches per training step

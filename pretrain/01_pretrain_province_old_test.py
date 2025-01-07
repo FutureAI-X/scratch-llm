@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer
 
 from model_define.model_futureai.configuration_futureai import FutureAiConfig
-from model_define.modeling_futureai import FutureAiModel
+from model_define.model_futureai.modeling_futureai import FutureAiModel
 import torch
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'

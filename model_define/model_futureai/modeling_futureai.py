@@ -5,7 +5,7 @@ from torch.nn import functional as F
 from transformers import PreTrainedModel
 from transformers.modeling_outputs import CausalLMOutputWithPast
 
-from model_define.configuration_futureai import FutureAiConfig
+from model_define.model_futureai.configuration_futureai import FutureAiConfig
 
 class FeedForward(nn.Module):
     """定义前馈神经网络"""
