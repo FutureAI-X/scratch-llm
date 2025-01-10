@@ -170,5 +170,4 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 /checkpoint_folder/
-/dataset_file/
 .idea
