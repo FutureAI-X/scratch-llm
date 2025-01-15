@@ -6,3 +6,6 @@ pip3 install torch torchvision torchaudio --index-url https://download.pytorch.o
 
 安装 OpenAI tiktoken 依赖
 pip3 install tiktoken
+
+安装 HuggingFace TRL
+pip install trl
