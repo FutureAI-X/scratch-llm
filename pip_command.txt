@@ -9,3 +9,6 @@ pip3 install tiktoken
 
 安装 HuggingFace TRL
 pip install trl
+
+安装 Streamlit
+pip install streamlit
